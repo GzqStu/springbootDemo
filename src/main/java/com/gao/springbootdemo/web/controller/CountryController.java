@@ -2,9 +2,10 @@ package com.gao.springbootdemo.web.controller;
 
 import com.gao.springbootdemo.web.entity.Country;
 import com.gao.springbootdemo.web.repository.CountryRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
  * @description：国家控制类
  * @version: v1.0
  */
-@RestController
+@Controller
 @RequestMapping("/country")
 public class CountryController {
 
@@ -45,5 +46,18 @@ public class CountryController {
     @RequestMapping(value = "query", method = RequestMethod.GET)
     public List<Country> queryCountry() {
         return countryRepository.findAll();
+    }
+
+    /**
+     * 测试页面
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "page", method = RequestMethod.GET)
+    public String testPage(Model model) {
+        List<Country> list = countryRepository.findAll();
+        model.addAttribute("countrys", list);
+        return "index";
     }
 }
